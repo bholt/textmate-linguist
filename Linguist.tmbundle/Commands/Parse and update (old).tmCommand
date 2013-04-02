@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+# #!/usr/bin/env macruby
+# require 'awesome_print'
+require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
+# puts ENV['TM_SUPPORT_PATH']
+# puts ENV['TM_BUNDLE_SUPPORT']
+
+tml = "#{ENV['TM_BUNDLE_SUPPORT']}/../Syntaxes/Custom.tmLanguage"
+
+g = nil
+File.open(tml,"r"){|f| g = OSX::PropertyList.load(f) }
+# g = NSDictionary.dictionaryWithContentsOfFile(tml)
+# puts g.to_s
+types = g["repository"]["project_types"]["patterns"]
+
+types &lt;&lt; {"name"=&gt;"support.type.project.clang", "match"=&gt;"\\bBar\\b"}
+
+puts g.to_plist
+
+File.open(tml,"w"){|f| OSX::PropertyList.dump(f, g) }
+# g.writeToFile(tml, atomically: true)
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>name</key>
+	<string>Parse and update grammar</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>newWindow</string>
+	<key>uuid</key>
+	<string>4855310A-07BB-44C8-9FD4-BEF1D6D106D2</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>

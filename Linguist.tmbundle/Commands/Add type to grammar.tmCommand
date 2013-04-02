@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
+lang_file = "#{ENV['TM_BUNDLE_SUPPORT']}/../Syntaxes/Custom.tmLanguage"
+
+new_type = STDIN.read
+
+g = nil
+File.open(lang_file,"r"){|f| g = OSX::PropertyList.load(f) }
+types = g["repository"]["project_types"]["patterns"]
+
+types &lt;&lt; {"name"=&gt;"support.type.project.clang", "match"=&gt;"\\b#{new_type}\\b"}
+
+g.to_plist # (for debugging)
+
+File.open(lang_file,"w"){|f| OSX::PropertyList.dump(f, g) }
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>name</key>
+	<string>Add to grammar as Type</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>toolTip</string>
+	<key>scope</key>
+	<string>source.clang</string>
+	<key>uuid</key>
+	<string>62ED4F56-47FD-403F-A0E1-6F941F7F81CE</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
