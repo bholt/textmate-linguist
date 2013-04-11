@@ -15,7 +15,7 @@ print os.environ['TM_PROJECT_DIRECTORY']
 mi = MateIndex()
 mi.parse(os.environ['TM_FILEPATH'])
 
-lang_file = os.environ['TM_BUNDLE_SUPPORT']+'/../Syntaxes/Custom.tmLanguage'
+lang_file = os.environ['TM_BUNDLE_SUPPORT']+'/../Syntaxes/Linguist.tmLanguage'
 lang = plist.readPlist(lang_file)
 
 lang_types = lang['repository']['project_types']['patterns']
@@ -25,7 +25,7 @@ existing_types = [ t['match'] for t in lang_types ]
 for t in mi.find_types():
   rt = '\\b' + t + '\\b'
   if rt not in existing_types:
-    lang_types.append({ 'name':'support.type.project.clang', 'match':rt })
+    lang_types.append({ 'name':'support.type.project.linguist', 'match':rt })
 
 plist.writePlist(lang, lang_file)
 </string>
@@ -42,9 +42,7 @@ plist.writePlist(lang, lang_file)
 	<key>outputFormat</key>
 	<string>text</string>
 	<key>outputLocation</key>
-	<string>newWindow</string>
-	<key>scope</key>
-	<string>source.clang</string>
+	<string>toolTip</string>
 	<key>uuid</key>
 	<string>815155A0-2430-4B03-9DF4-C8F8827C5ABD</string>
 	<key>version</key>

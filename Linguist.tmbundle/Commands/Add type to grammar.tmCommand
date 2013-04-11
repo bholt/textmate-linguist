@@ -7,7 +7,7 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby -wKU
 require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
-lang_file = "#{ENV['TM_BUNDLE_SUPPORT']}/../Syntaxes/Custom.tmLanguage"
+lang_file = "#{ENV['TM_BUNDLE_SUPPORT']}/../Syntaxes/Linguist.tmLanguage"
 
 new_type = STDIN.read
 
@@ -15,7 +15,7 @@ g = nil
 File.open(lang_file,"r"){|f| g = OSX::PropertyList.load(f) }
 types = g["repository"]["project_types"]["patterns"]
 
-types &lt;&lt; {"name"=&gt;"support.type.project.clang", "match"=&gt;"\\b#{new_type}\\b"}
+types &lt;&lt; {"name"=&gt;"support.type.project.linguist", "match"=&gt;"\\b#{new_type}\\b"}
 
 g.to_plist # (for debugging)
 
@@ -33,8 +33,6 @@ File.open(lang_file,"w"){|f| OSX::PropertyList.dump(f, g) }
 	<string>text</string>
 	<key>outputLocation</key>
 	<string>toolTip</string>
-	<key>scope</key>
-	<string>source.clang</string>
 	<key>uuid</key>
 	<string>62ED4F56-47FD-403F-A0E1-6F941F7F81CE</string>
 	<key>version</key>

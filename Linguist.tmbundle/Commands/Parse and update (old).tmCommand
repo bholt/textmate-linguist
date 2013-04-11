@@ -31,6 +31,8 @@ File.open(tml,"w"){|f| OSX::PropertyList.dump(f, g) }
 	<string>document</string>
 	<key>inputFormat</key>
 	<string>text</string>
+	<key>isDisabled</key>
+	<true/>
 	<key>name</key>
 	<string>Parse and update grammar</string>
 	<key>outputCaret</key>

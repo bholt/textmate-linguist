@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>src</string>
+	</array>
+	<key>name</key>
+	<string>LinguistBase</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>include</key>
+			<string>source.c++</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#project_types</string>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>project_types</key>
+		<dict>
+			<key>patterns</key>
+			<array/>
+		</dict>
+	</dict>
+	<key>scopeName</key>
+	<string>source.linguistbase</string>
+	<key>uuid</key>
+	<string>A1E35661-82A7-4B52-A05D-9F5A2EDCAF58</string>
+</dict>
+</plist>

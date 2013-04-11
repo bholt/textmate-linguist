@@ -17,3 +17,10 @@
 * Other directions:
     * Use MacRuby NSDictionary bridge if performance becomes a problem?
     * Directly hack Textmate's scope highlighting mechanism to support this?
+
+## Notes
+* Code completion popup dialog: `BundleSupport:lib/ui.rb:complete()`
+  * alternatively, you can just do a snippet like:
+  ```ruby
+  STDOUT << "fixup! ${1|#{choices.join ','}|}"
+  ```
