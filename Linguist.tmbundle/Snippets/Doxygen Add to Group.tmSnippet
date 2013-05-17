@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>/// @addtogroup $1
+/// @{$0</string>
+	<key>name</key>
+	<string>Doxygen Add to Group</string>
+	<key>scope</key>
+	<string>source.linguist, source.c++</string>
+	<key>tabTrigger</key>
+	<string>///gr</string>
+	<key>uuid</key>
+	<string>694A6F2D-D36E-4772-9E45-01272F701631</string>
+</dict>
+</plist>

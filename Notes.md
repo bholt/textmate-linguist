@@ -24,3 +24,5 @@
   ```ruby
   STDOUT << "fixup! ${1|#{choices.join ','}|}"
   ```
+
+* Add build error support. JSLintMate plugin has a nice mechanism that could be copied (tooltip on save with errors, HTML popup with links to line numbers...)

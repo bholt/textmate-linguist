@@ -33,8 +33,6 @@ plist.writePlist(lang, lang_file)
 	<string>selection</string>
 	<key>inputFormat</key>
 	<string>text</string>
-	<key>keyEquivalent</key>
-	<string>^~@c</string>
 	<key>name</key>
 	<string>Update grammar</string>
 	<key>outputCaret</key>

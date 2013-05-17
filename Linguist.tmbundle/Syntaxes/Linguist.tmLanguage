@@ -6,10 +6,12 @@
 	<array>
 		<string>src</string>
 	</array>
+	<key>injectionSelector</key>
+	<string>source.c++</string>
 	<key>keyEquivalent</key>
 	<string>^~L</string>
 	<key>name</key>
-	<string>Linguist</string>
+	<string>Linguist&lt;C++&gt;</string>
 	<key>patterns</key>
 	<array>
 		<dict>
@@ -27,6 +29,36 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>match</key>
+					<string>\btuple_graph\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bcsr_graph\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bedges_ptr_t\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bpacked_edge\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
 				<dict>
 					<key>match</key>
 					<string>\bTaskingScheduler\b</string>
@@ -203,6 +235,12 @@
 				</dict>
 				<dict>
 					<key>match</key>
+					<string>\barg\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
 					<string>\bWorker\b</string>
 					<key>name</key>
 					<string>support.type.project.linguist</string>
@@ -246,6 +284,12 @@
 				<dict>
 					<key>match</key>
 					<string>\bgeneric_delegate_request_args\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bHeapF\b</string>
 					<key>name</key>
 					<string>support.type.project.linguist</string>
 				</dict>
@@ -425,6 +469,12 @@
 				</dict>
 				<dict>
 					<key>match</key>
+					<string>\bfunction_traits\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
 					<string>\bremote_task_spawn_args\b</string>
 					<key>name</key>
 					<string>support.type.project.linguist</string>
@@ -557,25 +607,223 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\bgraphedges\b</string>
+					<string>\bresult_type\b</string>
 					<key>name</key>
 					<string>support.type.project.linguist</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\bgraph\b</string>
+					<string>\bNullAcquirer\b</string>
 					<key>name</key>
 					<string>support.type.project.linguist</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\bcolor_t\b</string>
+					<string>\bWO\b</string>
 					<key>name</key>
 					<string>support.type.project.linguist</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\bgraphint\b</string>
+					<string>\bIncoherentAcquirer\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bRequestArgs\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bRW\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bRO\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bAllocatorChunk\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bFreeListMap\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bCacheWO\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bMaster\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bCacheRO\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bAllocatorAddress\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bIncoherentReleaser\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bGlobalVector\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bIncoherent\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bIAStatistics\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bCacheStatistics\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bIRStatistics\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bShared\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bNullReleaser\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bChunkMap\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bCacheRW\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bCacheAllocator\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bAllocator\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bFreeList\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bPushCombiner\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bGlobalAllocator\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bbfs_tree_entry\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bBFSTreeEntry\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bBFSParent\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bFlusher\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bFlatCombiner\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bCounter\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\btest1_id\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\btest1\b</string>
+					<key>name</key>
+					<string>support.type.project.linguist</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bProxy\b</string>
 					<key>name</key>
 					<string>support.type.project.linguist</string>
 				</dict>
@@ -585,6 +833,6 @@
 	<key>scopeName</key>
 	<string>source.linguist</string>
 	<key>uuid</key>
-	<string>9681B918-7FF8-4701-AE13-1B9B3ADBF9B5</string>
+	<string>F8B47E84-6474-462C-B209-E42E05E314C1</string>
 </dict>
 </plist>

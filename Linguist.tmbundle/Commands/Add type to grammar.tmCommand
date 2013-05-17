@@ -5,21 +5,34 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby -wKU
-require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
-lang_file = "#{ENV['TM_BUNDLE_SUPPORT']}/../Syntaxes/Linguist.tmLanguage"
+	<string>#!/usr/bin/env python
+import sys, os, plistlib as plist
+lang_file = os.environ['TM_BUNDLE_SUPPORT']+'/../Syntaxes/Linguist.tmLanguage'
+lang = plist.readPlist(lang_file)
 
-new_type = STDIN.read
+new_type = sys.stdin.read()
 
-g = nil
-File.open(lang_file,"r"){|f| g = OSX::PropertyList.load(f) }
-types = g["repository"]["project_types"]["patterns"]
+lang['repository']['project_Types']['patterns'].append({
+	'name': 'support.type.project.lingust', 'match': '\\b'+new_type+'\\b'
+})
 
-types &lt;&lt; {"name"=&gt;"support.type.project.linguist", "match"=&gt;"\\b#{new_type}\\b"}
+plist.writePlist(lang, lang_file)
 
-g.to_plist # (for debugging)
-
-File.open(lang_file,"w"){|f| OSX::PropertyList.dump(f, g) }
+# #!/usr/bin/env ruby -wU
+# require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
+# lang_file = "#{ENV['TM_BUNDLE_SUPPORT']}/../Syntaxes/Linguist.tmLanguage"
+# 
+# new_type = STDIN.read
+# 
+# g = nil
+# File.open(lang_file,"r"){|f| g = OSX::PropertyList.load(f) }
+# types = g["repository"]["project_types"]["patterns"]
+# 
+# types &lt;&lt; {"name"=&gt;"support.type.project.linguist", "match"=&gt;"\\b#{new_type}\\b"}
+# 
+# # g.to_plist # (for debugging)
+# 
+# File.open(lang_file,"w"){|f| OSX::PropertyList.dump(f, g) }
 </string>
 	<key>input</key>
 	<string>selection</string>

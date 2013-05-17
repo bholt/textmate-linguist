@@ -11,3 +11,6 @@ Currently based around a similar idea as Vim's ""
 - Syntax highlighting/parsing for Ruby using one of their standard parsers
 - Navigation based on index (different underlying implementation based on language)
 - ...
+
+## Implementation Notes
+- Make new Linguist language instance for each project/language combination.
