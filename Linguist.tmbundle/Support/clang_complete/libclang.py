@@ -219,11 +219,11 @@ def getQuickFix(diagnostic):
     return None
 
   return dict({
-		'lnum' : diagnostic.location.line,
+    'lnum' : diagnostic.location.line,
     'col' : diagnostic.location.column,
     'text' : diagnostic.spelling,
     'type' : type
-	})
+  })
 
 def getQuickFixList(tu):
   return filter(None, map(getQuickFix, tu.diagnostics))
@@ -233,7 +233,7 @@ def highlightRange(range, hlGroup):
       + str(range.start.column) + 'c' + '.*' \
       + '\%' + str(range.end.column) + 'c/'
   command = "exe 'syntax match' . ' " + hlGroup + ' ' + pattern + "'"
-	raise NotImplementedError
+  raise NotImplementedError
 
 def highlightDiagnostic(diagnostic):
   if diagnostic.severity == diagnostic.Warning:
@@ -246,8 +246,8 @@ def highlightDiagnostic(diagnostic):
   pattern = '/\%' + str(diagnostic.location.line) + 'l\%' \
       + str(diagnostic.location.column) + 'c./'
   command = "exe 'syntax match' . ' " + hlGroup + ' ' + pattern + "'"
-	raise NotImplementedError
-	
+  raise NotImplementedError
+  
   for range in diagnostic.ranges:
     highlightRange(range, hlGroup)
 
@@ -465,7 +465,7 @@ def getCurrentCompletions(base):
   t.start()
   while t.isAlive():
     t.join(0.01)
-	
+  
   cr = t.result
   if cr is None:
     print "Cannot parse this source file. The following arguments " \
@@ -508,7 +508,7 @@ def jumpToLocation(filename, line, column, preview):
     command = "edit %s" % filename
   else:
     command = "normal m"
-	raise NotImplementedError
+  raise NotImplementedError
 
 def gotoDeclaration(preview=True):
   global debug
