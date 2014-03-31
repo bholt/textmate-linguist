@@ -12,8 +12,8 @@ lang = plist.readPlist(lang_file)
 
 new_type = sys.stdin.read()
 
-lang['repository']['project_Types']['patterns'].append({
-	'name': 'support.type.project.lingust', 'match': '\\b'+new_type+'\\b'
+lang['repository']['project_types']['patterns'].append({
+	'name': 'support.type.project.lingust', 'match': '(\w+::)*\\b'+new_type+'\\b'
 })
 
 plist.writePlist(lang, lang_file)

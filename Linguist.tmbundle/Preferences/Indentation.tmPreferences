@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Indentation</string>
+	<key>scope</key>
+	<string>source.linguist</string>
+	<key>settings</key>
+	<dict>
+		<key>decreaseIndentPattern</key>
+		<string>(?x)
+	    ^ \s* ( (?! \S.* /[*] ) .* [*]/ \s* )? \}([;\s]|\s*el?s?e?.*)* $
+	|   ^ \s* (public|private|protected): \s* $
+	|   ^ \s* @(public|private|protected) \s* $
+	</string>
+		<key>increaseIndentPattern</key>
+		<string>(?x)
+	    ^ .* \{ [^}"']* $
+	|   ^ \s* (public|private|protected): \s* $
+	|   ^ \s* @(public|private|protected) \s* $
+	|   ^ \s* \{ \} $
+	</string>
+		<key>indentNextLinePattern</key>
+		<string>(?x)^
+	    (?! .* [;:{},] \s*                $  # do not indent when line ends with ;, :, {, }, or comma
+	        ( // .* | /[*] .* [*]/ \s* )? $ #  …account for potential trailing comment
+	    |   @(public|private|protected)     # do not indent after obj-c data access keywords
+	    )
+	    .                                  # the negative look-ahead above means we don’t care about what we match here
+	</string>
+		<key>unIndentedLinePattern</key>
+		<string>^\s*((/\*|\*/|//|template\b.*?&gt;(?!\(.*\))|@protocol|@optional|@interface(?!.*\{)|@implementation|@end).*)?$</string>
+		<key>zeroIndentPattern</key>
+		<string>^\s*#</string>
+	</dict>
+	<key>uuid</key>
+	<string>04A3D1B9-E9F4-4F60-88E0-0C5B2CFAA361</string>
+</dict>
+</plist>

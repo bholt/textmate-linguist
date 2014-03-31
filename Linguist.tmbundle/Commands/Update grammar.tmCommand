@@ -23,8 +23,8 @@ lang_types = lang['repository']['project_types']['patterns']
 existing_types = [ t['match'] for t in lang_types ]
 
 for t in mi.find_types():
-  rt = '\\b' + t + '\\b'
-  if rt not in existing_types:
+  rt = '(\w+::)*\\b' + t + '\\b'
+  if rt not in existing_types and len(t) &gt; 0:
     lang_types.append({ 'name':'support.type.project.linguist', 'match':rt })
 
 plist.writePlist(lang, lang_file)
