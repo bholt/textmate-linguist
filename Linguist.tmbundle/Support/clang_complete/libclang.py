@@ -1,5 +1,7 @@
 from clang.cindex import *
-import vim
+# import vim
+import textmate as tm
+
 import time
 import threading
 import os
@@ -56,7 +58,7 @@ def initClangComplete(clang_complete_flags, clang_compilation_database, \
                       library_path):
   global index
 
-  debug = int(vim.eval("g:clang_debug")) == 1
+  debug = int(tm.debug()) == 1
 
   if library_path:
     Config.set_library_path(library_path)
@@ -107,8 +109,7 @@ def initClangComplete(clang_complete_flags, clang_compilation_database, \
 # Get a tuple (fileName, fileContent) for the file opened in the current
 # vim buffer. The fileContent contains the unsafed buffer content.
 def getCurrentFile():
-  file = "\n".join(vim.current.buffer[:] + ["\n"])
-  return (vim.current.buffer.name, file)
+  return (tm.filepath(), tm.buffer())
 
 class CodeCompleteTimer:
   def __init__(self, debug, file, line, column, params):
@@ -117,7 +118,7 @@ class CodeCompleteTimer:
     if not debug:
       return
 
-    content = vim.current.line
+    content = tm.current_line()
     print " "
     print "libclang code completion"
     print "========================"
@@ -217,21 +218,22 @@ def getQuickFix(diagnostic):
   else:
     return None
 
-  return dict({ 'bufnr' : int(vim.eval("bufnr('" + filename + "', 1)")),
-    'lnum' : diagnostic.location.line,
+  return dict({
+		'lnum' : diagnostic.location.line,
     'col' : diagnostic.location.column,
     'text' : diagnostic.spelling,
-    'type' : type})
+    'type' : type
+	})
 
 def getQuickFixList(tu):
-  return filter (None, map (getQuickFix, tu.diagnostics))
+  return filter(None, map(getQuickFix, tu.diagnostics))
 
 def highlightRange(range, hlGroup):
   pattern = '/\%' + str(range.start.line) + 'l' + '\%' \
       + str(range.start.column) + 'c' + '.*' \
       + '\%' + str(range.end.column) + 'c/'
   command = "exe 'syntax match' . ' " + hlGroup + ' ' + pattern + "'"
-  vim.command(command)
+	raise NotImplementedError
 
 def highlightDiagnostic(diagnostic):
   if diagnostic.severity == diagnostic.Warning:
@@ -244,8 +246,8 @@ def highlightDiagnostic(diagnostic):
   pattern = '/\%' + str(diagnostic.location.line) + 'l\%' \
       + str(diagnostic.location.column) + 'c./'
   command = "exe 'syntax match' . ' " + hlGroup + ' ' + pattern + "'"
-  vim.command(command)
-
+	raise NotImplementedError
+	
   for range in diagnostic.ranges:
     highlightRange(range, hlGroup)
 
@@ -253,12 +255,12 @@ def highlightDiagnostics(tu):
   map (highlightDiagnostic, tu.diagnostics)
 
 def highlightCurrentDiagnostics():
-  if vim.current.buffer.name in translationUnits:
-    highlightDiagnostics(translationUnits[vim.current.buffer.name])
+  if tm.filepath() in translationUnits:
+    highlightDiagnostics(translationUnits[tm.filepath()])
 
 def getCurrentQuickFixList():
-  if vim.current.buffer.name in translationUnits:
-    return getQuickFixList(translationUnits[vim.current.buffer.name])
+  if tm.filepath() in translationUnits:
+    return getQuickFixList(translationUnits[tm.filepath()])
   return []
 
 # Get the compilation parameters from the compilation database for source
@@ -324,9 +326,7 @@ def getCompileParams(fileName):
   global builtinHeaderPath
   params = getCompilationDBParams(fileName)
   args = params['args']
-  args += splitOptions(vim.eval("g:clang_user_options"))
-  args += splitOptions(vim.eval("b:clang_user_options"))
-  args += splitOptions(vim.eval("b:clang_parameters"))
+  args += splitOptions(tm.config("clang_user_options"))
 
   if builtinHeaderPath:
     args.append("-I" + builtinHeaderPath)
@@ -336,14 +336,14 @@ def getCompileParams(fileName):
 
 def updateCurrentDiagnostics():
   global debug
-  debug = int(vim.eval("g:clang_debug")) == 1
-  params = getCompileParams(vim.current.buffer.name)
-  timer = CodeCompleteTimer(debug, vim.current.buffer.name, -1, -1, params)
+  debug = int(tm.debug()) == 1
+  params = getCompileParams(tm.filepath())
+  timer = CodeCompleteTimer(debug, tm.filepath(), -1, -1, params)
 
   with workingDir(params['cwd']):
     with libclangLock:
       getCurrentTranslationUnit(params['args'], getCurrentFile(),
-                                vim.current.buffer.name, timer, update = True)
+                                tm.filepath(), timer, update = True)
   timer.finish()
 
 def getCurrentCompletionResults(line, column, args, currentFile, fileName,
@@ -443,32 +443,29 @@ class CompleteThread(threading.Thread):
                                                     self.fileName, self.timer)
 
 def WarmupCache():
-  params = getCompileParams(vim.current.buffer.name)
+  params = getCompileParams(tm.filepath())
   timer = CodeCompleteTimer(0, "", -1, -1, params)
-  t = CompleteThread(-1, -1, getCurrentFile(), vim.current.buffer.name,
+  t = CompleteThread(-1, -1, getCurrentFile(), tm.filepath(),
                      params, timer)
   t.start()
 
 def getCurrentCompletions(base):
   global debug
-  debug = int(vim.eval("g:clang_debug")) == 1
-  sorting = vim.eval("g:clang_sort_algo")
-  line, _ = vim.current.window.cursor
-  column = int(vim.eval("b:col"))
-  params = getCompileParams(vim.current.buffer.name)
+  debug = int(tm.debug()) == 1
+  sorting = tm.config("clang_sort_algo")
+  line, _ = tm.line()
+  column = int(tm.column())
+  params = getCompileParams(tm.filepath())
 
-  timer = CodeCompleteTimer(debug, vim.current.buffer.name, line, column,
+  timer = CodeCompleteTimer(debug, tm.filepath(), line, column,
                             params)
 
-  t = CompleteThread(line, column, getCurrentFile(), vim.current.buffer.name,
+  t = CompleteThread(line, column, getCurrentFile(), tm.filepath(),
                      params, timer)
   t.start()
   while t.isAlive():
     t.join(0.01)
-    cancel = int(vim.eval('complete_check()'))
-    if cancel != 0:
-      return (str([]), timer)
-
+	
   cr = t.result
   if cr is None:
     print "Cannot parse this source file. The following arguments " \
@@ -507,37 +504,29 @@ def getAbbr(strings):
 def jumpToLocation(filename, line, column, preview):
   if preview:
     command = "pedit +%d %s" % (line, filename)
-  elif filename != vim.current.buffer.name:
+  elif filename != tm.filepath():
     command = "edit %s" % filename
   else:
     command = "normal m"
-  try:
-    vim.command(command)
-  except:
-    # For some unknown reason, whenever an exception occurs in
-    # vim.command, vim goes crazy and output tons of useless python
-    # errors, catch those.
-    return
-  if not preview:
-    vim.current.window.cursor = (line, column - 1)
+	raise NotImplementedError
 
 def gotoDeclaration(preview=True):
   global debug
-  debug = int(vim.eval("g:clang_debug")) == 1
-  params = getCompileParams(vim.current.buffer.name)
-  line, col = vim.current.window.cursor
-  timer = CodeCompleteTimer(debug, vim.current.buffer.name, line, col, params)
+  debug = int(tm.debug()) == 1
+  params = getCompileParams(tm.filepath())
+  line, col = tm.line(), tm.column()
+  timer = CodeCompleteTimer(debug, tm.filepath(), line, col, params)
 
   with libclangLock:
     with workingDir(params['cwd']):
       tu = getCurrentTranslationUnit(params['args'], getCurrentFile(),
-                                     vim.current.buffer.name, timer,
+                                     tm.filepath(), timer,
                                      update = True)
       if tu is None:
         print "Couldn't get the TranslationUnit"
         return
 
-      f = File.from_name(tu, vim.current.buffer.name)
+      f = File.from_name(tu, tm.filepath())
       loc = SourceLocation.from_position(tu, f, line, col + 1)
       cursor = Cursor.from_location(tu, loc)
       defs = [cursor.get_definition(), cursor.referenced]
