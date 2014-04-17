@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env python
+import sys, os, plistlib as plist
+from os import environ as env
+
+sys.path.append(env['TM_BUNDLE_SUPPORT'])
+from make_index import MateIndex
+
+idx = MateIndex()
+idx.parse()
+
+cr = idx.tu.codeComplete(env['TM_FILEPATH'],
+                         int(env['TM_LINE_NUMBER']),
+                         int(env['TM_COLUMN_NUMBER']))
+
+completions = []
+for r in cr.results:
+  for s in r.string:
+    if s.isKindTypedText():
+      completions.append(s.spelling)
+
+# completions = ['x', 'y', 'size()']
+
+sys.stdout.write("${1|" + ",".join(completions) + "|}")</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>^ </string>
+	<key>name</key>
+	<string>Clang Complete</string>
+	<key>outputCaret</key>
+	<string>heuristic</string>
+	<key>outputFormat</key>
+	<string>snippet</string>
+	<key>outputLocation</key>
+	<string>atCaret</string>
+	<key>scope</key>
+	<string>source.linguist</string>
+	<key>uuid</key>
+	<string>42AEFC98-189A-4B67-8482-7B7CDC9A0555</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -64,8 +64,13 @@ class MateIndex:
     
     return result
   
-  def parse(self, fname):
-    self.tu = self.index.parse(fname)
+  def parse(self, path=None, args=None):
+    if not args and 'CLANG_USER_OPTIONS' in env:
+      args = env['CLANG_USER_OPTIONS'].split()
+    if not path and 'TM_FILEPATH' in env:
+      path = env['TM_FILEPATH']
+    
+    self.tu = self.index.parse(path, args)
     
     
 if __name__ == "__main__":
