@@ -5,7 +5,7 @@ LIBCLANG_PATH = "./libclang-py"
 if env.has_key('TM_BUNDLE_SUPPORT'):
   LIBCLANG_PATH = env['TM_BUNDLE_SUPPORT']+"/libclang-py"  
 sys.path.append(LIBCLANG_PATH)
-from clang.cindex import Index, Cursor, CursorKind, Config
+from clang.cindex import Index, Cursor, CursorKind, Config, SourceLocation as Location
 
 Config.set_library_path('/opt/llvm/head/lib')
 
@@ -71,7 +71,17 @@ class MateIndex:
       path = env['TM_FILEPATH']
     
     self.tu = self.index.parse(path, args)
-    
+  
+  @property
+  def cursor(self):
+    """
+    Get a Cursor object for TextMate's current cursor point (file,line,column).
+    """
+    return Cursor.from_location(self.tu, self.tu.get_location(env['TM_FILEPATH'],
+      ( int(env['TM_LINE_NUMBER']), int(env['TM_COLUMN_NUMBER'])-1 ) ))
+  
+  def current_type(self):
+    return self.cursor.type.get_declaration().spelling;
     
 if __name__ == "__main__":
   DEBUG = True

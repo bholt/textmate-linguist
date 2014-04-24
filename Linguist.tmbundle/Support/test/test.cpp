@@ -7,6 +7,8 @@ struct Foo {
 
 std::vector<Foo> foos;
 
-void bar(Foo& f) {
-  f.x
+void bar(Foo& foo) {
+  foo.x
+    
+  foos
 }

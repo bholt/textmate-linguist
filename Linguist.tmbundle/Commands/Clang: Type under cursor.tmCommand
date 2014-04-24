@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env python
+import sys, os, plistlib as plist
+from os import environ as env
+sys.path.append(env['TM_BUNDLE_SUPPORT'])
+from make_index import MateIndex
+
+idx = MateIndex()
+idx.parse()
+
+print idx.current_type()
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>@D</string>
+	<key>name</key>
+	<string>Clang: Type under cursor</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>toolTip</string>
+	<key>scope</key>
+	<string>source.linguist</string>
+	<key>uuid</key>
+	<string>91327872-5B12-47BC-B3A4-11D1F82D3B35</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
